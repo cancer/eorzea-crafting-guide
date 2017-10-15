@@ -25,10 +25,10 @@
         <th class="CraftList_Header">Lv</th>
       </tr>
       <tr v-for="item in craftList" :key="item.id">
-        <td>{{item.name}}</td>
-        <td>{{item.job}}</td>
+        <td><router-link :to="`/detail/${item.id}`">{{item.name}}</router-link></td>
+        <td>{{getJobNameById(item.job.id)}}</td>
         <td>{{item.category}}</td>
-        <td>Lv {{item.level}}</td>
+        <td>Lv {{item.job.level}}</td>
       </tr>
     </table>
     <div class="Selection">
@@ -45,20 +45,9 @@
       <div class="LevelSelection">
         <h3 class="LevelSelection_Heading">手帳別検索</h3>
         <ul class="LevelSelection_List">
-          <li class="LevelSelection_ListItem"><a href="javascript: void(0);">1 - 5</a></li>
-          <li class="LevelSelection_ListItem"><a href="javascript: void(0);">6 - 10</a></li>
-          <li class="LevelSelection_ListItem"><a href="javascript: void(0);">11 - 15</a></li>
-          <li class="LevelSelection_ListItem"><a href="javascript: void(0);">16 - 20</a></li>
-          <li class="LevelSelection_ListItem"><a href="javascript: void(0);">21 - 25</a></li>
-          <li class="LevelSelection_ListItem"><a href="javascript: void(0);">26 - 30</a></li>
-          <li class="LevelSelection_ListItem"><a href="javascript: void(0);">31 - 35</a></li>
-          <li class="LevelSelection_ListItem"><a href="javascript: void(0);">36 - 40</a></li>
-          <li class="LevelSelection_ListItem"><a href="javascript: void(0);">41 - 45</a></li>
-          <li class="LevelSelection_ListItem"><a href="javascript: void(0);">46 - 50</a></li>
-          <li class="LevelSelection_ListItem"><a href="javascript: void(0);">51 - 55</a></li>
-          <li class="LevelSelection_ListItem"><a href="javascript: void(0);">56 - 60</a></li>
-          <li class="LevelSelection_ListItem"><a href="javascript: void(0);">61 - 65</a></li>
-          <li class="LevelSelection_ListItem"><a href="javascript: void(0);">66 - 70</a></li>
+          <li v-for="(level, index) in levels" :key="index" class="LevelSelection_ListItem">
+            <a href="javascript: void(0);">{{level}}</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -87,6 +76,7 @@ export default {
     ...mapState([
       'craftList',
       'jobs',
+      'levels',
     ]),
     ...mapGetters([
       'getJobNameById',

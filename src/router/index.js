@@ -1,5 +1,5 @@
-import HomeComponent from '../components/Home.vue';
-import DetailComponent from '../components/Detail.vue';
+import HomeComponent from '../containers/Home.vue';
+import DetailComponent from '../containers/Detail.vue';
 
 const routes = {
   routes: [
