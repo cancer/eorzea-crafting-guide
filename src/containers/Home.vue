@@ -3,7 +3,7 @@
     <div class="ToolBar">
       <div class="ToolBar_Main">
         <h2 class="ToolBar_Heading">キーワード検索</h2>
-        <input @change="change" class="ToolBar_Search" type="text">
+        <input @change="searchKeyword" :value="search.keyword" class="ToolBar_Search" type="text">
       </div>
       <div class="ToolBar_Sub">
         <select class="ToolBar_DisplayCount" name="" id=""></select>
@@ -16,8 +16,9 @@
         </ul>
       </div>
     </div>
-    <table class="CraftList">
-      <h3>最近見たレシピ</h3>
+    <table v-if="!searching" class="CraftList">
+      <h3 v-if="search.keyword === ''">最近見たレシピ</h3>
+      <h3 v-if="search.keyword !== ''">{{search.keyword}} での検索結果</h3>
       <tr>
         <th class="CraftList_Header">名前</th>
         <th class="CraftList_Header">クラス</th>
@@ -36,7 +37,7 @@
         <h3 class="ClassSelection_Heading">クラス別検索</h3>
         <ul class="ClassSelection_List">
           <li v-for="job in jobs" :key="job.id" class="ClassSelection_ListItem">
-            <a href="javascript: void(0);">
+            <a @click.prevent="searchJob(job.id)" href="">
               <img :src="job.icon" :alt="getJobNameById(job.id)">
             </a>
           </li>
@@ -46,7 +47,7 @@
         <h3 class="LevelSelection_Heading">手帳別検索</h3>
         <ul class="LevelSelection_List">
           <li v-for="(level, index) in levels" :key="index" class="LevelSelection_ListItem">
-            <a href="javascript: void(0);">{{level}}</a>
+            <a @click.prevent="searchLevel(level)" href="">{{level}}</a>
           </li>
         </ul>
       </div>
@@ -69,7 +70,7 @@
 
 <script>
 import Vue from 'vue';
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex';
 
 export default {
   computed: {
@@ -77,6 +78,8 @@ export default {
       'craftList',
       'jobs',
       'levels',
+      'search',
+      'searching',
     ]),
     ...mapGetters([
       'getJobNameById',
@@ -85,10 +88,31 @@ export default {
   methods: {
     ...mapActions([
       'fetchList',
+      'searchByKeyword',
+      'searchByJob',
+      'searchByLevel',
     ]),
-    change(event) {
-      console.log(event)
+    ...mapMutations([
+      'updateKeyword',
+      'updateJob',
+      'updateLevel',
+      'updateSearching',
+    ]),
+    searchKeyword(event) {
+      this.updateSearching(true);
+      this.updateKeyword(event.target.value);
+      this.searchByKeyword(event.target.value);
     },
+    searchJob(id) {
+      this.updateSearching(true);
+      this.updateJob(id);
+      this.searchByJob(id);
+    },
+    searchLevel(level) {
+      this.updateSearching(true);
+      this.updateLevel(level);
+      this.searchByLevel(level);
+    }
   },
   created: function() {
     this.fetchList();

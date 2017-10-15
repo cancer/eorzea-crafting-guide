@@ -99,4 +99,16 @@ export const mutations = {
     state.itemData = adaptItemData(data);
     state.recipe   = data.tree.map(item => adaptRecipe(item));
   },
+  updateKeyword(state, data) {
+    state.search = Object.assign({}, state.search, { keyword: data });
+  },
+  updateJob(state, data) {
+    state.search = Object.assign({}, state.search, { job: data });
+  },
+  updateLevel(state, data) {
+    state.search = Object.assign({}, state.search, { level: data });
+  },
+  updateSearching(state, data) {
+    state.searching = data;
+  }
 };

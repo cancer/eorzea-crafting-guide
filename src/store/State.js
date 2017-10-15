@@ -17,6 +17,7 @@ export const state = {
   ],
   jobs:      [],
   craftList: [],
+  searching: false,
   search: {
     job:     '',
     level:   '',
