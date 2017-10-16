@@ -30,5 +30,5 @@ const recipeTable = {
 export default Vue.component('recipe-table', recipeTable);
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 </style>

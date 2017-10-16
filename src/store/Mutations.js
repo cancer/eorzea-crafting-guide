@@ -17,7 +17,7 @@ const adaptCraftList = (data) => {
     id:   data.id,
     name: data.name_ja,
     job: {
-      id:    data.classjob,
+      id:    data.classjob.id,
       level: data.level_view,
     },
   };
@@ -93,7 +93,11 @@ export const mutations = {
     state.jobs = adaptJobs(data);
   },
   updateList(state, data) {
-    state.craftList = data.map(item => adaptCraftList(item));
+    console.log(data)
+    state.craftList.items = data.map(item => adaptCraftList(item));
+  },
+  updatePage(state, data) {
+    state.craftList.page = data;
   },
   updateDetail(state, data) {
     state.itemData = adaptItemData(data);
@@ -110,5 +114,5 @@ export const mutations = {
   },
   updateSearching(state, data) {
     state.searching = data;
-  }
+  },
 };

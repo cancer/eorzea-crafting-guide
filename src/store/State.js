@@ -16,7 +16,10 @@ export const state = {
     '66 - 70',
   ],
   jobs:      [],
-  craftList: [],
+  craftList: {
+    items: [],
+    page: null,
+  },
   searching: false,
   search: {
     job:     '',

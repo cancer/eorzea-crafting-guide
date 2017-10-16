@@ -1,120 +1,160 @@
 [
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 1,
   "level_view": 1,
   "name_ja": "ブロンズインゴット"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 2,
   "level_view": 1,
   "name_ja": "ハチェット"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 3,
   "level_view": 2,
   "name_ja": "バスタードソード"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 4,
   "level_view": 2,
   "name_ja": "アマチュアファイル"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 5,
   "level_view": 3,
   "name_ja": "ブロンズリベット"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 6,
   "level_view": 3,
   "name_ja": "ウォーアクス"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 7,
   "level_view": 3,
   "name_ja": "アマチュアプライヤー"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 8,
   "level_view": 4,
   "name_ja": "アマチュアアウル"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 9,
   "level_view": 4,
   "name_ja": "ソー"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 10,
   "level_view": 5,
   "name_ja": "アマチュアクローハンマー"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 11,
   "level_view": 5,
   "name_ja": "クロスペインハンマー"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 12,
   "level_view": 5,
   "name_ja": "ドーミングハンマー"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 13,
   "level_view": 6,
   "name_ja": "アマチュアクリナリーナイフ"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 14,
   "level_view": 6,
   "name_ja": "アマチュアモーター"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 15,
   "level_view": 7,
   "name_ja": "ヴァイキングソード"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 16,
   "level_view": 7,
   "name_ja": "チェーサーハンマー"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 17,
   "level_view": 7,
   "name_ja": "ラブリュス"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 18,
   "level_view": 8,
   "name_ja": "ピック"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 19,
   "level_view": 8,
   "name_ja": "ヘッドナイフ"
   },
   {
-  "classjob": 9,
+  "classjob": {
+    "id": 9
+  },
   "id": 20,
   "level_view": 9,
   "name_ja": "クラウドアクス"
