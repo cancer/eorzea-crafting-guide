@@ -1,12 +1,14 @@
 <template>
   <div class="Container">
+        <div>
+        選択中 => ジョブ: {{search.job}} / 手帳: {{search.levelLow}} - {{search.levelHigh}} / キーワード: {{search.keyword}} / ページ: {{search.page}} / limit: {{search.limit}}
+        </div>
     <div class="ToolBar">
       <div class="ToolBar_Main">
         <h2 class="ToolBar_Heading">キーワード検索</h2>
         <input @change="searchKeyword" :value="search.keyword" class="ToolBar_Search" type="text">
-        選択中 => ジョブ: <img :src="getJobIconById(search.jobId)"> / 手帳: {{search.level}} / キーワード: {{search.keyword}}
       </div>
-      <div class="ToolBar_Sub">
+      <!--div class="ToolBar_Sub">
         <select class="ToolBar_DisplayCount" name="" id=""></select>
         <ul class="ToolBar_Pager">
           <li class="ToolBar_PagerItem"><a href="">&lt;&lt;</a></li>
@@ -15,7 +17,7 @@
           <li class="ToolBar_PagerItem"><a href="">&gt;</a></li>
           <li class="ToolBar_PagerItem"><a href="">&gt;&gt;</a></li>
         </ul>
-      </div>
+      </div-->
     </div>
     <div v-if="searching" class="Loading">
       <loading class="Loading_Main"></loading>
@@ -26,13 +28,11 @@
       <tr>
         <th class="CraftList_Header">名前</th>
         <th class="CraftList_Header">クラス</th>
-        <th class="CraftList_Header">カテゴリ</th>
         <th class="CraftList_Header">Lv</th>
       </tr>
       <tr v-for="item in craftList.items" :key="item.id">
         <td><router-link :to="`/detail/${item.id}`">{{item.name}}</router-link></td>
-        <td>{{getJobNameById(item.job.id)}}</td>
-        <td>{{item.category}}</td>
+        <td>{{item.job.name}}</td>
         <td>Lv {{item.job.level}}</td>
       </tr>
     </table>
@@ -55,8 +55,8 @@
           </li>
         </ul>
       </div>
-      <pager v-if="craftList.page" :paging="craftList.page" class="Pager"></pager>
     </div>
+    <pager v-if="craftList.page" :paging="craftList.page" class="Pager"></pager>
   </div>
 </template>
 
@@ -83,32 +83,30 @@ export default {
   methods: {
     ...mapActions([
       'fetchLatest',
-      'searchByKeyword',
-      'searchByJob',
-      'searchByLevel',
       'searchList',
-    ]),
-    ...mapMutations([
-      'updateKeyword',
-      'updateJob',
-      'updateLevel',
-      'updateSearching',
+      'changeKeyword',
+      'changeJob',
+      'changeLevel',
     ]),
     searchKeyword(event) {
-      this.updateSearching(true);
-      this.updateKeyword(event.target.value);
-      //this.searchByKeyword(event.target.value);
+      this.changeKeyword(event.target.value);
     },
     searchJob(id) {
-      this.updateSearching(true);
-      this.updateJob(id);
-      //this.searchByJob(id);
+      if (this.search.job === id) {
+        this.changeJob('');
+        return;
+      }
+
+      this.changeJob(id);
     },
     searchLevel(level) {
-      this.updateSearching(true);
-      this.updateLevel(level);
-      //this.searchByLevel(level);
-    }
+      if (`${this.search.levelLow} - ${this.search.levelHigh}` === level) {
+        this.changeLevel('');
+        return;
+      }
+
+      this.changeLevel(level);
+    },
   },
   watch: {
     search: function() {
@@ -140,6 +138,13 @@ export default {
   .ToolBar {
     grid-area: tool-bar;
     display: flex;
+    width: 800px;
+    padding: 10px;
+    border: 1px solid #e3ddd1;
+    border-radius: 5px;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 0 #dedede;
+    background-color: #f1ebe0;
 
     &_Main {
       flex: 1 1 auto;
@@ -147,6 +152,19 @@ export default {
 
     &_Sub {
       flex: 0 0 200px;
+    }
+
+    &_Heading {
+      margin: 0;
+      margin-bottom: 10px;
+    }
+    &_Search {
+      width: 100%;
+      height: 3em;
+      box-sizing: border-box;
+      border: 1px solid #5f4634;
+      border-radius: 3px;
+      background-color: rgba(255, 255, 255, 0.7);
     }
 
     &_Pager {
@@ -170,6 +188,10 @@ export default {
     grid-area: selection;
   }
   .ClassSelection {
+    width: 200px;
+    height: 150px;
+    box-sizing: border-box;
+    border-radius: 5px;
     &_List {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;

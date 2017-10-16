@@ -19,12 +19,15 @@ export const actions = {
   },
   fetchLatest({ commit }) {
     return Promise.resolve()
-      .then(() => JSON.parse(localStorage.getItem('ecg-latest-list')))
+      .then(() => JSON.parse(localStorage.getItem('ecg-latest-list')) || [])
       .then(data => commit('updateList', data))
       .catch(err => console.error(err));
   },
   searchList({ commit, state }) {
+    console.log(state.search.page)
     const query = {
+      limit:    state.search.limit,
+      page:     state.search.page,
       one:      'recipes',
       language: 'ja',
     };
@@ -35,19 +38,15 @@ export const actions = {
       query["classjobs"] = state.search.job;
     }
     if (state.search.level) {
-      const [ levelRow, levelHigh ] = state.search.level.split(' - ');
-      query["level_view|gt"] = levelRow;
-      query["level_view|lt"] = levelHigh;
+      query["level_view|gt"] = state.search.level.low;
+      query["level_view|lt"] = state.search.level.high;
     }
 
     return Promise.resolve()
       .then(() => get(`https://api.xivdb.com/search`, query))
       .then(data => {
-        commit('updatePage', data.recipes.paging);
-        return Promise.all(data.recipes.results.map(item => get(item.url_api)));
-      })
-      .then(data => {
-        commit('updateList',      data);
+        commit('updatePage',      data.recipes.paging);
+        commit('updateList',      data.recipes.results);
         commit('updateSearching', false);
       })
       .catch(err => console.error(err));
@@ -58,4 +57,22 @@ export const actions = {
       .then(data => commit('updateDetail', data))
       .catch(err => console.log(err));
   },
+  changeKeyword({ commit, state }, keyword) {
+    commit('updateSearching', true);
+    commit('updateSearchCondition', Object.assign({}, state.search, { keyword }));
+  },
+  changeJob({ commit, state }, job) {
+    commit('updateSearching', true);
+    commit('updateSearchCondition', Object.assign({}, state.search, { job }));
+  },
+  changeLevel({ commit, state }, level) {
+    const [levelLow, levelHigh] = level.split(' - ');
+    commit('updateSearching', true);
+    commit('updateSearchCondition', Object.assign({}, state.search, { levelLow, levelHigh }));
+  },
+  changePage({ commit, state }, page) {
+    console.log(page)
+    commit('updateSearching', true);
+    commit('updateSearchCondition', Object.assign({}, state.search, { page }));
+  }
 };

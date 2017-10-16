@@ -7,9 +7,12 @@ export const state = {
   },
   searching: false,
   search: {
-    job:     '',
-    level:   '',
-    keyword: '',
+    job:       '',
+    levelHigh: '',
+    levelLow:  '',
+    keyword:   '',
+    limit:     20,
+    page:      1,
   },
   itemData: {
     id:    '',

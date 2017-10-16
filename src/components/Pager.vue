@@ -1,20 +1,31 @@
 <template>
   <div class="Pager">
     <ul class="Pager_Container">
-      <li class="Pager_Item"><a href="">&lt;&lt;</a></li>
-      <li class="Pager_Item" :class="{ disabled: disabledPrev }"><a href="">&lt;</a></li>
+      <li class="Pager_Item">
+        <a @click.prevent="changePage(1)" href="">&lt;&lt;</a>
+      </li>
+      <li class="Pager_Item" :class="{ disabled: disabledPrev }">
+        <a @click="changePage(paging.prev)" href="">&lt;</a>
+      </li>
       <li
-        v-for="(page, idx) in pages"
+        v-for="(page, idx) in paging.pages"
         :key="idx"
         :class="{ active: idx === currentIndex }"
-      >{{page}}</li>
-      <li class="Pager_Item" :class="{ disabled: disabledNext }"><a href="">&gt;</a></li>
-      <li class="Pager_Item"><a href="">&gt;&gt;</a></li>
+        class="Pager_Item"
+      ><a @click.prevent="changePage(page)" href="">{{page}}</a></li>
+      <li class="Pager_Item" :class="{ disabled: disabledNext }">
+        <a @click.prevent="changePage(paging.next)" href="">&gt;</a>
+      </li>
+      <li class="Pager_Item">
+        <a @click.prevent="changePage(paging.total)" href="">&gt;&gt;</a>
+        </li>
     </ul>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   props: {
     paging: {
@@ -26,13 +37,8 @@ export default {
     },
   },
   computed: {
-    pages() {
-      const min = Math.max(this.paging.page - 2, 0);
-      const max = Math.min(this.paging.page + 2, this.paging.page - 1);
-      return this.paging.pages.slice(min, max);
-    },
     currentIndex() {
-      return this.pages.indexOf(this.paging.page);
+      return this.paging.pages.indexOf(this.paging.page);
     },
     disabledPrev() {
       return this.paging.page === this.paging.prev;
@@ -40,7 +46,12 @@ export default {
     disabledNext() {
       return this.paging.page === this.paging.next;
     },
-  }
+  },
+  methods: {
+    ...mapActions([
+      'changePage',
+    ]),
+  },
 }
 </script>
 
@@ -48,7 +59,7 @@ export default {
   .Pager {
     &_Container {
       display: flex;
-      width: 200px;
+      min-width: 300px;
       margin: 0 auto;
     }
 

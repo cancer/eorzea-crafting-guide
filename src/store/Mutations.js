@@ -15,9 +15,9 @@ const adaptJobs = (data) => {
 const adaptCraftList = (data) => {
   return {
     id:   data.id,
-    name: data.name_ja,
+    name: data.name,
     job: {
-      id:    data.classjob.id,
+      name:  data.class_name,
       level: data.level_view,
     },
   };
@@ -96,24 +96,18 @@ export const mutations = {
     state.levels = levelList;
   },
   updateList(state, data) {
-    console.log(data)
     state.craftList.items = data.map(item => adaptCraftList(item));
   },
   updatePage(state, data) {
     state.craftList.page = data;
+    state.search.page    = 1;
   },
   updateDetail(state, data) {
     state.itemData = adaptItemData(data);
     state.recipe   = data.tree.map(item => adaptRecipe(item));
   },
-  updateKeyword(state, data) {
-    state.search = Object.assign({}, state.search, { keyword: data });
-  },
-  updateJob(state, data) {
-    state.search = Object.assign({}, state.search, { job: data });
-  },
-  updateLevel(state, data) {
-    state.search = Object.assign({}, state.search, { level: data });
+  updateSearchCondition(state, data) {
+    state.search = data;
   },
   updateSearching(state, data) {
     state.searching = data;

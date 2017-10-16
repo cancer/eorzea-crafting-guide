@@ -5,7 +5,7 @@
   },
   "id": 1,
   "level_view": 1,
-  "name_ja": "ブロンズインゴット"
+  "name": "ブロンズインゴット"
   },
   {
   "classjob": {
@@ -13,7 +13,7 @@
   },
   "id": 2,
   "level_view": 1,
-  "name_ja": "ハチェット"
+  "name": "ハチェット"
   },
   {
   "classjob": {
@@ -21,7 +21,7 @@
   },
   "id": 3,
   "level_view": 2,
-  "name_ja": "バスタードソード"
+  "name": "バスタードソード"
   },
   {
   "classjob": {
@@ -29,7 +29,7 @@
   },
   "id": 4,
   "level_view": 2,
-  "name_ja": "アマチュアファイル"
+  "name": "アマチュアファイル"
   },
   {
   "classjob": {
@@ -37,7 +37,7 @@
   },
   "id": 5,
   "level_view": 3,
-  "name_ja": "ブロンズリベット"
+  "name": "ブロンズリベット"
   },
   {
   "classjob": {
@@ -45,7 +45,7 @@
   },
   "id": 6,
   "level_view": 3,
-  "name_ja": "ウォーアクス"
+  "name": "ウォーアクス"
   },
   {
   "classjob": {
@@ -53,7 +53,7 @@
   },
   "id": 7,
   "level_view": 3,
-  "name_ja": "アマチュアプライヤー"
+  "name": "アマチュアプライヤー"
   },
   {
   "classjob": {
@@ -61,7 +61,7 @@
   },
   "id": 8,
   "level_view": 4,
-  "name_ja": "アマチュアアウル"
+  "name": "アマチュアアウル"
   },
   {
   "classjob": {
@@ -69,7 +69,7 @@
   },
   "id": 9,
   "level_view": 4,
-  "name_ja": "ソー"
+  "name": "ソー"
   },
   {
   "classjob": {
@@ -77,7 +77,7 @@
   },
   "id": 10,
   "level_view": 5,
-  "name_ja": "アマチュアクローハンマー"
+  "name": "アマチュアクローハンマー"
   },
   {
   "classjob": {
@@ -85,7 +85,7 @@
   },
   "id": 11,
   "level_view": 5,
-  "name_ja": "クロスペインハンマー"
+  "name": "クロスペインハンマー"
   },
   {
   "classjob": {
@@ -93,7 +93,7 @@
   },
   "id": 12,
   "level_view": 5,
-  "name_ja": "ドーミングハンマー"
+  "name": "ドーミングハンマー"
   },
   {
   "classjob": {
@@ -101,7 +101,7 @@
   },
   "id": 13,
   "level_view": 6,
-  "name_ja": "アマチュアクリナリーナイフ"
+  "name": "アマチュアクリナリーナイフ"
   },
   {
   "classjob": {
@@ -109,7 +109,7 @@
   },
   "id": 14,
   "level_view": 6,
-  "name_ja": "アマチュアモーター"
+  "name": "アマチュアモーター"
   },
   {
   "classjob": {
@@ -117,7 +117,7 @@
   },
   "id": 15,
   "level_view": 7,
-  "name_ja": "ヴァイキングソード"
+  "name": "ヴァイキングソード"
   },
   {
   "classjob": {
@@ -125,7 +125,7 @@
   },
   "id": 16,
   "level_view": 7,
-  "name_ja": "チェーサーハンマー"
+  "name": "チェーサーハンマー"
   },
   {
   "classjob": {
@@ -133,7 +133,7 @@
   },
   "id": 17,
   "level_view": 7,
-  "name_ja": "ラブリュス"
+  "name": "ラブリュス"
   },
   {
   "classjob": {
@@ -141,7 +141,7 @@
   },
   "id": 18,
   "level_view": 8,
-  "name_ja": "ピック"
+  "name": "ピック"
   },
   {
   "classjob": {
@@ -149,7 +149,7 @@
   },
   "id": 19,
   "level_view": 8,
-  "name_ja": "ヘッドナイフ"
+  "name": "ヘッドナイフ"
   },
   {
   "classjob": {
@@ -157,6 +157,6 @@
   },
   "id": 20,
   "level_view": 9,
-  "name_ja": "クラウドアクス"
+  "name": "クラウドアクス"
   }
 ]
