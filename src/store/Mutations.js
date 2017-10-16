@@ -1,4 +1,4 @@
-import { jobIconMappings } from '../constants';
+import { jobIconMappings, levelList } from '../constants';
 
 const adaptJobs = (data) => {
   return Object.keys(jobIconMappings).map(jobid => {
@@ -91,6 +91,9 @@ const _adaptSynths = (synths) => {
 export const mutations = {
   updateClassJobs(state, data) {
     state.jobs = adaptJobs(data);
+  },
+  updateLevels(state) {
+    state.levels = levelList;
   },
   updateList(state, data) {
     console.log(data)

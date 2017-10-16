@@ -3,6 +3,7 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -63,5 +64,11 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, '../src/service-worker.js'),
+      excludes: ['**/.*', '**/*.map', '*.html'],
+    }),
+  ],
 }

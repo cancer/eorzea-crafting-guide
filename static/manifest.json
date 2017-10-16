@@ -1,0 +1,7 @@
+{
+  "name": "eorzea-crafting-guide",
+  "short_name": "ecg",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff"
+}

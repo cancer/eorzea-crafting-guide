@@ -11,7 +11,10 @@ export const actions = {
   fetchInit({ commit }) {
     return Promise.resolve()
       .then(() => get('https://api.xivdb.com/data/classjobs'))
-      .then(data => commit('updateClassJobs', data))
+      .then(data => {
+        commit('updateClassJobs', data);
+        commit('updateLevels');
+      })
       .catch(err => console.log(err));
   },
   fetchLatest({ commit }) {
