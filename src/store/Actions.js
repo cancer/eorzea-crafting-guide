@@ -53,7 +53,7 @@ export const actions = {
   },
   fetchDetail({ commit }, id) {
     return Promise.resolve()
-      .then(() => get(`https://api.xivdb.com/recipe/${id}`))
+      .then(() => get(`https://api.xivdb.com/recipe/${id}?language=ja`))
       .then(data => commit('updateDetail', data))
       .catch(err => console.log(err));
   },
@@ -74,5 +74,47 @@ export const actions = {
     console.log(page)
     commit('updateSearching', true);
     commit('updateSearchCondition', Object.assign({}, state.search, { page }));
+  },
+  toggleToBuyMarket({ commit, getters, state }, id) {
+    console.log(state.buyMarket, getters.isToBuyMarket(id))
+    if (getters.isToBuyMarket(id)) {
+      commit('removeToBuyMarketList', state.buyMarket.filter(itemId => {
+        return itemId !== id;
+      }));
+      return;
+    }
+    commit('updateToBuyMarketList', id);
+  },
+  incAmount({ commit, state }) {
+    const data = state.amount + 1;
+    commit('updateAmount', data);
+  },
+  decAmount({ commit, state }) {
+    const data = state.amount - 1;
+    if (data < 1) {
+      commit('updateAmount', 1);
+      return;
+    }
+    commit('updateAmount', data);
+  },
+  changeAmount({ commit, state }, data) {
+    if (data < 1) {
+      commit('updateAmount', 1);
+      return;
+    }
+    commit('updateAmount', data);
+  },
+  saveLatest({ commit, state }, data) {
+    return Promise.resolve()
+      .then(() => JSON.parse(localStorage.getItem('ecg-latest-list')) || [])
+      .then(list => {
+        list.pop();
+        return list;
+      })
+      .then(list => {
+        list.unshift(state.craftList.items.find(item => item.id === data));
+        return list;
+      })
+      .then(list => localStorage.setItem('ecg-latest-list', JSON.stringify(list)));
   }
 };

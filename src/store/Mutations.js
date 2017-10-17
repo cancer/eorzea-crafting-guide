@@ -47,6 +47,7 @@ const adaptRecipe = (data) => {
     quantity:  data.quantity,
     recipe:    synths.recipes,
     hasRecipe: synths.recipes.length > 0,
+    isShard:   data.id < 20,
   };
 };
 
@@ -111,5 +112,14 @@ export const mutations = {
   },
   updateSearching(state, data) {
     state.searching = data;
+  },
+  updateToBuyMarketList(state, data) {
+    state.buyMarket.push(data);
+  },
+  removeToBuyMarketList(state, data) {
+    state.buyMarket = data;
+  },
+  updateAmount(state, data) {
+    state.amount = data;
   },
 };

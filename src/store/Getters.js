@@ -18,8 +18,11 @@ export const getters = {
 
     return '';
   },
-  materials: state => {
+  materials: (state, getters) => {
     const _iterator = (prev, current) => {
+      if (getters.isToBuyMarket(current.id))  {
+        return prev;
+      }
       if (current.recipe.length === 0) {
         prev.push(current);
         return prev;
@@ -31,16 +34,21 @@ export const getters = {
     return materials.reduce((prev, current) => {
       const target = prev.find(item => item.id === current.id);
       if (!target) {
-        prev.push(current);
+        const clone = Object.assign({}, current);
+        clone.quantity = clone.quantity * state.amount;
+        prev.push(clone);
         return prev;
       }
 
       return prev.map(item => {
         if (item.id === current.id) {
-          item.quantity += current.quantity;
+          item.quantity += current.quantity * state.amount;
         }
         return item;
       });
-    }, []);
+    }, []).sort((a, b) => b.id - a.id);
+  },
+  isToBuyMarket: state => id => {
+    return !!state.buyMarket.find(itemId => itemId === id);
   },
 };

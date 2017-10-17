@@ -66,9 +66,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new ServiceWorkerWebpackPlugin({
-      entry: path.join(__dirname, '../src/service-worker.js'),
-      excludes: ['**/.*', '**/*.map', '*.html'],
-    }),
+    //new ServiceWorkerWebpackPlugin({
+    //  entry: path.join(__dirname, '../src/service-worker.js'),
+    //  excludes: ['**/.*', '**/*.map', '*.html'],
+    //}),
   ],
 }

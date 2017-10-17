@@ -29,4 +29,6 @@ export const state = {
   },
   recipe:    [],
   materials: [],
+  buyMarket: [],
+  amount: 1,
 };

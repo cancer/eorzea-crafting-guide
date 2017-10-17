@@ -22,20 +22,28 @@
     <div v-if="searching" class="Loading">
       <loading class="Loading_Main"></loading>
     </div>
-    <table v-if="!searching" class="CraftList">
-      <h3 v-if="search.keyword === ''">最近見たレシピ</h3>
-      <h3 v-if="search.keyword !== ''">{{search.keyword}} での検索結果</h3>
-      <tr>
-        <th class="CraftList_Header">名前</th>
-        <th class="CraftList_Header">クラス</th>
-        <th class="CraftList_Header">Lv</th>
-      </tr>
-      <tr v-for="item in craftList.items" :key="item.id">
-        <td><router-link :to="`/detail/${item.id}`">{{item.name}}</router-link></td>
-        <td>{{item.job.name}}</td>
-        <td>Lv {{item.job.level}}</td>
-      </tr>
-    </table>
+    <div class="CraftList">
+      <table v-if="!searching" class="CraftList_Table">
+        <tr v-for="item in craftList.items" :key="item.id" class="CraftList_TableRow">
+          <td class="CraftList_TableCell">
+            <a @click.prevent="navigateToDetail(item.id)" href="">
+              {{item.name}}
+            </a>
+            <!--router-link :to=""></router-link-->
+          </td>
+          <td class="CraftList_TableCell">
+            <a @click.prevent="navigateToDetail(item.id)" href="">
+              {{item.job.name}}
+            </a>
+          </td>
+          <td class="CraftList_TableCell">
+            <a @click.prevent="navigateToDetail(item.id)" href="">
+              Lv {{item.job.level}}
+            </a>
+          </td>
+        </tr>
+      </table>
+    </div>
     <div class="Selection">
       <div class="ClassSelection">
         <h3 class="ClassSelection_Heading">クラス別検索</h3>
@@ -87,6 +95,7 @@ export default {
       'changeKeyword',
       'changeJob',
       'changeLevel',
+      'saveLatest',
     ]),
     searchKeyword(event) {
       this.changeKeyword(event.target.value);
@@ -107,6 +116,10 @@ export default {
 
       this.changeLevel(level);
     },
+    navigateToDetail(id) {
+      this.saveLatest(id);
+      this.$router.push(`/detail/${id}`);
+    },
   },
   watch: {
     search: function() {
@@ -124,6 +137,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+  $heading-color: #fff;
+  $box-color: #41444e;
+  $box-radius: 5px;
+  $box-border: 0px;
+  $anchor-color: #80dcff;
+  $anchor-hover-color: #07b2f3;
+
+
   .Container {
     display: grid;
     grid-template-columns: 200px 1fr;
@@ -140,11 +161,10 @@ export default {
     display: flex;
     width: 800px;
     padding: 10px;
-    border: 1px solid #e3ddd1;
-    border-radius: 5px;
+    border: $box-border;
+    border-radius: $box-radius;
     box-sizing: border-box;
-    box-shadow: 2px 2px 0 #dedede;
-    background-color: #f1ebe0;
+    background-color: $box-color;
 
     &_Main {
       flex: 1 1 auto;
@@ -157,12 +177,16 @@ export default {
     &_Heading {
       margin: 0;
       margin-bottom: 10px;
+      color: $heading-color;
     }
     &_Search {
       width: 100%;
-      height: 3em;
+      height: 1.8em;
+      font-size: 18px;
+      padding: 3px;
+      color: #1d1919;
       box-sizing: border-box;
-      border: 1px solid #5f4634;
+      border: 1px solid #34365f;
       border-radius: 3px;
       background-color: rgba(255, 255, 255, 0.7);
     }
@@ -178,34 +202,114 @@ export default {
   }
   .CraftList {
     grid-area: craft-list;
-    width: 100%;
+    padding: 10px 0px;
+    box-sizing: border-box;
 
-    &_Header {
-      text-align: left;
+    &_Heading {
+      height: 40px;
+      line-height: 40px;
+      margin: 0 0 10px;
+      padding-left: 10px;
+      color: $heading-color;
+    }
+    &_Table {
+      width: 100%;
+      margin: 0 auto;
+      background-color: #41444e;
+      border-radius: 5px;
+      border-collapse: collapse;
+      border-spacing: 0;
+
+      &Row:hover {
+        background-color: rgba(255, 234, 24, 0.25);
+        a {
+          text-decoration: underline;
+        }
+      }
+      &Cell {
+        height: 64px;
+        line-height: 64px;
+        padding-left: 10px;
+        border-top: 1px solid #7d8ba2;
+        font-weight: bold;
+        font-size: 18px;
+        color: #fff;
+        a {
+          display: block;
+          height: 100%;
+          color: #fff;
+          text-decoration: none;
+        }
+      }
     }
   }
   .Selection {
     grid-area: selection;
+    width: 200px;
+    padding: 10px;
+    border-radius: $box-radius;
+    border: $box-border;
+    box-sizing: border-box;
+    background-color: $box-color;
   }
   .ClassSelection {
-    width: 200px;
     height: 150px;
-    box-sizing: border-box;
-    border-radius: 5px;
+
+    &_Heading {
+      margin: 0;
+      color: $heading-color;
+    }
     &_List {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
       grid-template-rows: 1fr 1fr;
+      width: 180px;
+      height: 100px;
+      margin: 10px auto;
+      padding: 12px 5px 5px;
+      box-sizing: border-box;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background-color: rgba(255, 255, 255, 0.1);
 
       &Item {
         list-style: none;
+        text-align: center;
+        :hover {
+          img {
+            opacity: 0.8;
+          }
+        }
       }
     }
   }
   .LevelSelection {
+    padding: 5px;
+
+    &_Heading {
+      margin: 0;
+      color: $heading-color;
+    }
     &_List {
+      width: 170px;
+      padding: 16px 8px;
+      box-sizing: border-box;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background-color: rgba(255, 255, 255, 0.1);
+
       &Item {
         list-style: none;
+        width: 170px;
+        height: 36px;
+        line-height: 36px;
+        a {
+          display: block;
+          width: 100%;
+          height: 100%;
+          color: $anchor-color;
+        }
+        :hover {
+          color: $anchor-hover-color;
+        }
       }
     }
   }

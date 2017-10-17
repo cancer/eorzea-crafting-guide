@@ -4,8 +4,8 @@ import { httpGet } from './lib/http-get';
 const CACHE_NAME = 'ecg-cache';
 
 const cacheUrls = [
-  './',
-  './app.js',
+  //'./',
+  //'./app.js',
   './static/job_icon/1kMI2v_KEVgo30RFvdFCyySkFo.png',
   './static/job_icon/ACAcQe3hWFxbWRVPqxKj_MzDiY.png',
   './static/job_icon/bBVQ9IFeXqjEdpuIxmKvSkqalE.png',
