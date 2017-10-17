@@ -31,21 +31,15 @@ export const actions = {
   },
   searchList({ commit, state }) {
     const query = {
-      limit:    state.search.limit,
-      page:     state.search.page,
-      one:      'recipes',
-      language: 'ja',
+      string:          state.search.keyword,
+      classjobs:       state.search.job,
+      "level_view|gt": state.search.levelLow,
+      "level_view|lt": state.search.levelHigh,
+      limit:           state.search.limit,
+      page:            state.search.page,
+      one:             'recipes',
+      language:        'ja',
     };
-    if (state.search.keyword) {
-      query["string"] = state.search.keyword;
-    }
-    if (state.search.job) {
-      query["classjobs"] = state.search.job;
-    }
-    if (state.search.level) {
-      query["level_view|gt"] = state.search.level.low;
-      query["level_view|lt"] = state.search.level.high;
-    }
 
     return Promise.resolve()
       .then(() => get(`https://api.xivdb.com/search`, query))
@@ -66,21 +60,24 @@ export const actions = {
       .catch(err => console.log(err));
   },
   changeKeyword({ commit, state }, keyword) {
-    commit('updateSearching', true);
+    commit('updateHasCondition',    true);
+    commit('updateSearching',       true);
     commit('updateSearchCondition', Object.assign({}, state.search, { keyword }));
   },
   changeJob({ commit, state }, job) {
-    commit('updateSearching', true);
+    commit('updateHasCondition',    true);
+    commit('updateSearching',       true);
     commit('updateSearchCondition', Object.assign({}, state.search, { job }));
   },
   changeLevel({ commit, state }, level) {
     const [levelLow, levelHigh] = level.split(' - ');
-    commit('updateSearching', true);
+    commit('updateHasCondition',    true);
+    commit('updateSearching',       true);
     commit('updateSearchCondition', Object.assign({}, state.search, { levelLow, levelHigh }));
   },
   changePage({ commit, state }, page) {
-    console.log(page)
-    commit('updateSearching', true);
+    commit('updateHasCondition',    true);
+    commit('updateSearching',       true);
     commit('updateSearchCondition', Object.assign({}, state.search, { page }));
   },
   toggleToBuyMarket({ commit, getters, state }, id) {

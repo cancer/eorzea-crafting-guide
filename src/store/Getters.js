@@ -18,6 +18,10 @@ export const getters = {
 
     return '';
   },
+  currentLevelIndex: state => {
+    const levelStr = `${state.search.levelLow} - ${state.search.levelHigh}`;
+    return state.levels.indexOf(levelStr);
+  },
   materials: (state, getters) => {
     const _iterator = (prev, current) => {
       if (getters.isToBuyMarket(current.id))  {

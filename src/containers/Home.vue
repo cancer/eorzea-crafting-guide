@@ -1,11 +1,8 @@
 <template>
   <div class="Container">
-        <div>
-        選択中 => ジョブ: {{search.job}} / 手帳: {{search.levelLow}} - {{search.levelHigh}} / キーワード: {{search.keyword}} / ページ: {{search.page}} / limit: {{search.limit}}
-        </div>
     <div class="ToolBar">
       <div class="ToolBar_Main">
-        <h2 class="ToolBar_Heading">キーワード検索</h2>
+        <h3 class="ToolBar_Heading">🔍 キーワード検索</h3>
         <input @change="searchKeyword" :value="search.keyword" class="ToolBar_Search" type="text">
       </div>
       <!--div class="ToolBar_Sub">
@@ -19,10 +16,10 @@
         </ul>
       </div-->
     </div>
-    <div v-if="searching" class="Loading">
-      <loading class="Loading_Main"></loading>
-    </div>
     <div class="CraftList">
+      <div v-if="searching" class="Loading">
+        <loading class="Loading_Main"></loading>
+      </div>
       <table v-if="!searching" class="CraftList_Table">
         <tr v-for="item in craftList.items" :key="item.id" class="CraftList_TableRow">
           <td class="CraftList_TableCell">
@@ -46,9 +43,14 @@
     </div>
     <div class="Selection">
       <div class="ClassSelection">
-        <h3 class="ClassSelection_Heading">クラス別検索</h3>
+        <h3 class="ClassSelection_Heading">🛠 クラス別検索</h3>
         <ul class="ClassSelection_List">
-          <li v-for="job in jobs" :key="job.id" class="ClassSelection_ListItem">
+          <li
+            v-for="job in jobs"
+            :key="job.id"
+            :class="{ 'ClassSelection_ListItem--active': job.id === search.job }"
+            class="ClassSelection_ListItem"
+          >
             <a @click.prevent="searchJob(job.id)" href="">
               <img :src="job.icon" :alt="getJobNameById(job.id)">
             </a>
@@ -56,9 +58,14 @@
         </ul>
       </div>
       <div class="LevelSelection">
-        <h3 class="LevelSelection_Heading">手帳別検索</h3>
+        <h3 class="LevelSelection_Heading">📖 手帳別検索</h3>
         <ul class="LevelSelection_List">
-          <li v-for="(level, index) in levels" :key="index" class="LevelSelection_ListItem">
+          <li
+            v-for="(level, index) in levels"
+            :key="index"
+            class="LevelSelection_ListItem"
+            :class="{ 'LevelSelection_ListItem--active': index === currentLevelIndex }"
+          >
             <a @click.prevent="searchLevel(level)" href="">{{level}}</a>
           </li>
         </ul>
@@ -86,6 +93,7 @@ export default {
     ...mapGetters([
       'getJobNameById',
       'getJobIconById',
+      'currentLevelIndex',
     ]),
   },
   methods: {
@@ -127,7 +135,12 @@ export default {
     }
   },
   created: function() {
-    this.fetchLatest();
+    if (this.search.hasCondition === false) {
+      this.fetchLatest();
+      return;
+    }
+
+    this.searchList();
   },
   components: {
     Loading,
@@ -137,12 +150,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  $heading-color: #fff;
+  $heading-color: #ded9d5;
   $box-color: #41444e;
   $box-radius: 5px;
   $box-border: 0px;
-  $anchor-color: #80dcff;
-  $anchor-hover-color: #07b2f3;
 
 
   .Container {
@@ -181,14 +192,15 @@ export default {
     }
     &_Search {
       width: 100%;
-      height: 1.8em;
-      font-size: 18px;
-      padding: 3px;
-      color: #1d1919;
+      height: 40px;
+      line-height: 40px;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 3px 10px;
+      color: #ffdd61;
       box-sizing: border-box;
-      border: 1px solid #34365f;
-      border-radius: 3px;
-      background-color: rgba(255, 255, 255, 0.7);
+      border: 1px solid #797e8d;
+      background-color: #5a5e69;
     }
 
     &_Pager {
@@ -213,17 +225,31 @@ export default {
       color: $heading-color;
     }
     &_Table {
+      $C: &;
+
       width: 100%;
       margin: 0 auto;
-      background-color: #41444e;
       border-radius: 5px;
       border-collapse: collapse;
       border-spacing: 0;
+      border-left: 1px solid #5a6075;
+      border-right: 1px solid #5a6075;
 
-      &Row:hover {
-        background-color: rgba(255, 234, 24, 0.25);
-        a {
-          text-decoration: underline;
+      &Row {
+        background-color: #555861;
+        &:nth-child(2n-1) {
+          background-color: #41444e;
+        }
+        &:first-child {
+          #{$C}Cell {
+            border-top: none;
+          }
+        }
+        &:hover {
+          background-color: rgba(255, 234, 24, 0.25);
+          a {
+            text-decoration: underline;
+          }
         }
       }
       &Cell {
@@ -274,10 +300,28 @@ export default {
       &Item {
         list-style: none;
         text-align: center;
-        :hover {
-          img {
-            opacity: 0.8;
+        a {
+          display: block;
+          width: 100%;
+          height: 100%;
+          &:hover {
+            img {
+              border: 1px solid #bbb298;
+            }
           }
+        }
+        &--active {
+          a {
+            img {
+              border: 1px solid #ffe69f;
+            }
+          }
+        }
+        img {
+          display: block;
+          margin: auto;
+          box-sizing: border-box;
+          border-radius: 5px;
         }
       }
     }
@@ -291,7 +335,7 @@ export default {
     }
     &_List {
       width: 170px;
-      padding: 16px 8px;
+      padding: 16px 8px 16px 0;
       box-sizing: border-box;
       border: 1px solid rgba(255, 255, 255, 0.2);
       background-color: rgba(255, 255, 255, 0.1);
@@ -301,14 +345,30 @@ export default {
         width: 170px;
         height: 36px;
         line-height: 36px;
+        padding-left: 8px;
+        box-sizing: border-box;
+        &:hover {
+          background-color: #787d8c;
+        }
         a {
           display: block;
           width: 100%;
           height: 100%;
-          color: $anchor-color;
+          color: #80dcff;
+          text-decoration: none;
+          &:hover {
+            color: #07b2f3;
+            text-decoration: underline;
+          }
         }
-        :hover {
-          color: $anchor-hover-color;
+        &--active {
+          background-color: #908d6b;
+          a {
+            color: #fff;
+            &:hover {
+              color: #fff;
+            }
+          }
         }
       }
     }

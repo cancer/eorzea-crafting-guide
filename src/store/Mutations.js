@@ -23,6 +23,9 @@ export const mutations = {
   updateSearchCondition(state, data) {
     state.search = data;
   },
+  updateHasCondition(state, data) {
+    state.search.hasCondition = data;
+  },
   updateSearching(state, data) {
     state.searching = data;
   },
