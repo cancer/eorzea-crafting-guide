@@ -114,7 +114,7 @@ export default {
                          "item-view item-view item-view"
                          "material material recipe";
     grid-column-gap: 40px;
-    width: 1200px;
+    width: 1024px;
     height: auto;
     min-height: 1000px;
     margin: 0 auto;
@@ -144,7 +144,7 @@ export default {
     grid-template-areas: "icon name ."
                          "icon descriptions ."
                          "icon descriptions amount";
-    width: 1160px;
+    width: 984px;
     color: #fff;
 
     &_Name {

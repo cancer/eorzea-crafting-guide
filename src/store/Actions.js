@@ -1,4 +1,10 @@
 import { httpGet as get } from '../lib/http-get';
+import {
+  adaptJobs,
+  adaptCraftList,
+  adaptItemData,
+  adaptRecipe,
+} from './Adapters'
 
 const craftListSchema = [
   'id',
@@ -12,7 +18,7 @@ export const actions = {
     return Promise.resolve()
       .then(() => get('https://api.xivdb.com/data/classjobs'))
       .then(data => {
-        commit('updateClassJobs', data);
+        commit('updateClassJobs', adaptJobs(data));
         commit('updateLevels');
       })
       .catch(err => console.log(err));
@@ -24,7 +30,6 @@ export const actions = {
       .catch(err => console.error(err));
   },
   searchList({ commit, state }) {
-    console.log(state.search.page)
     const query = {
       limit:    state.search.limit,
       page:     state.search.page,
@@ -46,7 +51,7 @@ export const actions = {
       .then(() => get(`https://api.xivdb.com/search`, query))
       .then(data => {
         commit('updatePage',      data.recipes.paging);
-        commit('updateList',      data.recipes.results);
+        commit('updateList',      data.recipes.results.map(item => adaptCraftList(item)));
         commit('updateSearching', false);
       })
       .catch(err => console.error(err));
@@ -54,7 +59,10 @@ export const actions = {
   fetchDetail({ commit }, id) {
     return Promise.resolve()
       .then(() => get(`https://api.xivdb.com/recipe/${id}?language=ja`))
-      .then(data => commit('updateDetail', data))
+      .then(data => {
+        commit('updateDetailItem',   adaptItemData(data));
+        commit('updateDetailRecipe', data.tree.map(item => adaptRecipe(item)));
+      })
       .catch(err => console.log(err));
   },
   changeKeyword({ commit, state }, keyword) {
@@ -104,15 +112,17 @@ export const actions = {
     }
     commit('updateAmount', data);
   },
-  saveLatest({ commit, state }, data) {
+  saveLatest({ commit, state }, id) {
     return Promise.resolve()
       .then(() => JSON.parse(localStorage.getItem('ecg-latest-list')) || [])
-      .then(list => {
-        list.pop();
-        return list;
-      })
-      .then(list => {
-        list.unshift(state.craftList.items.find(item => item.id === data));
+      .then(_list => {
+        // 同じのが重複しないようにないように
+        const list = _list.filter(item => item.id !== id);
+        // Max 20 超えたら古いの消す
+        if (list.length === 20) {
+          list.pop();
+        }
+        list.unshift(state.craftList.items.find(item => item.id === id));
         return list;
       })
       .then(list => localStorage.setItem('ecg-latest-list', JSON.stringify(list)));
